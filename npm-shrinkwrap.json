@@ -3,7 +3,7 @@
   "version": "2.1.4",
   "dependencies": {
     "fsevents": {
-      "version": "1.0.14",
+      "version": "1.0.15",
       "optional": true,
       "dependencies": {
         "abbrev": {
