@@ -16,7 +16,7 @@ import Sticky from 'app_modules/site/components/sticky';
 import StickyNav from 'app_modules/site/components/sticky/nav';
 import classNames from 'classnames';
 
-import releases from '.generated/ui.tokens';
+import sets from '.generated/ui.tokens';
 import categories from './_categories';
 
 const nameFormats = [
@@ -35,13 +35,9 @@ const nameFormats = [
 const Tokens = React.createClass({
 
   getInitialState() {
-    const release = releases[0];
-    const group = release.groups[0];
-    const tokensByCategory = this.getTokensByCategory(group);
+    const tokensByCategory = this.getTokensByCategory(sets);
     return {
       role: 'regular',
-      release,
-      group,
       tokensByCategory
     };
   },
@@ -50,29 +46,31 @@ const Tokens = React.createClass({
     return _.find(nameFormats, { role: this.state.role });
   },
 
-  getTokensByCategory(group) {
-    const tokens = group.sets.reduce((tokens, set) =>
+  getTokensByCategory(sets) {
+    const setTokens = sets.reduce((tokens, set) =>
       tokens.concat(set.contents.propKeys.map(key => set.contents.props[key]))
     , []);
-    return _.groupBy(tokens, 'category');
+    return _.groupBy(setTokens, 'category');
   },
 
   render() {
     return (
       <div>
         {this.renderHeader()}
-        <div className="slds-p-around--xx-large slds-grid slds-wrap site-content">
-          <StickyNav fixedElementsAbove=".site-tools">
-            <div className="site-menu--jump-links">
-              <h3 className="site-text-heading--label">Categories</h3>
-              <ul className="slds-list--vertical slds-has-block-links">
-                {this.renderCategories()}
-              </ul>
+        <div className="site-content site">
+          <div className="slds-grid slds-wrap">
+            <StickyNav fixedElementsAbove=".site-tools">
+              <div className="site-menu--jump-links">
+                <h3 className="site-text-heading--label">Categories</h3>
+                <ul className="slds-list--vertical slds-has-block-links">
+                  {this.renderCategories()}
+                </ul>
+              </div>
+            </StickyNav>
+            <div className="site-main-content slds-col slds-col-rule--right slds-size--1-of-1 slds-large-size--4-of-6 slds-large-order--1">
+              {this.renderInfo()}
+              {this.renderTokens()}
             </div>
-          </StickyNav>
-          <div className="slds-col slds-col-rule--right slds-size--1-of-1 slds-large-size--5-of-6 slds-large-order--1 site-main-content">
-            {this.renderInfo()}
-            {this.renderTokens()}
           </div>
         </div>
       </div>
@@ -80,20 +78,15 @@ const Tokens = React.createClass({
   },
 
   renderHeader() {
-    const {release} = this.state;
-    const options = release.groups.map(group => {
-      return <option key={group.name} value={group.name}>{group.label}</option>;
-    });
-    const formatSelect = !process.env.INTERNAL
-      ? null
-      : <div className="slds-form-element slds-p-horizontal--medium">
-          <label htmlFor="slds-tokens-name-format" className="slds-form-element__label" >Format:</label>
-          <div className="slds-form-element__control">
-            <select className="slds-select slds-no-flex" id="slds-tokens-name-format" />
-          </div>
-        </div>;
+    const formatSelect =
+      <div className="slds-form-element slds-p-horizontal--medium">
+        <label htmlFor="slds-tokens-name-format" className="slds-form-element__label">Format:</label>
+        <div className="slds-form-element__control">
+          <select className="slds-select slds-no-flex" id="slds-tokens-name-format" />
+        </div>
+      </div>;
     return (
-      <Sticky>
+      <Sticky className="site">
         <div className="site-tools slds-form--inline">
           <div className="slds-form-element slds-p-vertical--medium">
             <label className="slds-assistive-text" htmlFor="find-token-input">Find Token</label>

@@ -87,7 +87,7 @@ export default React.createClass({
         <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
         {this.renderAnalytics()}
-        <script src="https://cdn.ravenjs.com/3.7.0/raven.min.js" />
+        <script src="https://cdn.ravenjs.com/3.9.1/raven.min.js" />
         <script dangerouslySetInnerHTML={{__html: sentryScript}} />
       </head>
     );
@@ -133,8 +133,8 @@ export default React.createClass({
 
   renderBody() {
     return (
-      <body>
-        <div className="page-wrapper" dangerouslySetInnerHTML={{__html: this.props.contentHTML}} />
+      <body className="site-body">
+        <div className="site-page-wrapper" dangerouslySetInnerHTML={{__html: this.props.contentHTML}} />
         {this.renderScripts()}
       </body>
     );

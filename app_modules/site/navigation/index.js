@@ -169,13 +169,68 @@ const nav = formatNavItem({
           label: 'Loading'
         },
         {
+          label: 'Localization'
+        },
+        {
           label: 'Markup and Style'
         },
         {
-          label: 'Messaging'
-        },
-        {
-          label: 'Localization'
+          label: 'Messaging',
+          children: [
+            {
+              path: '/guidelines/messaging-overview',
+              label: 'Overview'
+            },
+            {
+              path: '/guidelines/messaging-types',
+              label: 'Types'
+            },
+            {
+              label: 'Components',
+              children: [
+                {
+                  path: '/guidelines/messaging-components-overview',
+                  label: 'Overview'
+                },
+                {
+                  path: '/guidelines/messaging-components-banners',
+                  label: 'Banners'
+                },
+                {
+                  path: '/guidelines/messaging-components-inline-text',
+                  label: 'Inline Text'
+                },
+                {
+                  path: '/guidelines/messaging-components-illustration-and-inline-text',
+                  label: 'Illustration & Inline Text'
+                },
+                {
+                  path: '/guidelines/messaging-components-modals',
+                  label: 'Modals'
+                },
+                {
+                  path: '/guidelines/messaging-components-notices',
+                  label: 'Notices'
+                },
+                {
+                  path: '/guidelines/messaging-components-notifications',
+                  label: 'Notifications'
+                },
+                {
+                  path: '/guidelines/messaging-components-popovers',
+                  label: 'Popovers'
+                },
+                {
+                  path: '/guidelines/messaging-components-toasts',
+                  label: 'Toasts'
+                }
+              ]
+            },
+            {
+              label: 'States',
+              path: '/guidelines/messaging-states'
+            }
+          ]
         },
         {
           label: 'Motion'
@@ -194,7 +249,12 @@ const nav = formatNavItem({
     {
       route: 'components',
       label: 'Components',
-      children: [utilities, touch].concat(components)
+      children: [
+        {
+          path: '/components-overview',
+          label: 'Overview'
+        }
+      ].concat([utilities, touch]).concat(components)
     },
     {
       label: 'Design Tokens'

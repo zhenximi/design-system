@@ -72,9 +72,7 @@ class ComponentFlavor extends React.Component {
         : null,
       // If the component example has states, set the initial previewState
       previewState: _.has(flavor.example, 'states')
-        ? _.first(flavor.example.states) : false,
-      // Used for accessibility
-      initialView: true
+        ? _.first(flavor.example.states) : false
     };
   }
 
@@ -141,7 +139,7 @@ class ComponentFlavor extends React.Component {
     const statusBadgeType = _.words(status).join('-');
     const className = classNames(
       'slds-badge slds-m-left--medium slds-shrink-none slds-align-middle',
-      `badge--${statusBadgeType}`
+      `site-badge--${statusBadgeType}`
     );
     return (
       <span className={className}>{words}</span>
@@ -157,7 +155,7 @@ class ComponentFlavor extends React.Component {
       lightning: 'Lightning Out'
     };
     const labelVisbility = {
-      internal: ['aura'],
+      internal: ['aura', 's1'],
       external: ['s1', 'lightning']
     };
     return _.keys(flavor.compatibility)
@@ -170,11 +168,11 @@ class ComponentFlavor extends React.Component {
         const compatible = flavor.compatibility[key];
         const label = `${compatible ? '' : 'Not '}Compatible with ${labels[key]}`;
         const className = classNames('slds-badge slds-m-left--medium slds-shrink-none slds-align-middle', {
-          'badge--compatible': compatible,
-          'badge--not-compatible': !compatible
+          'site-badge--compatible': compatible,
+          'site-badge--not-compatible': !compatible
         });
         return badges.concat((
-          <span className={className} key={`badge-${key}`}>
+          <span className={className} key={`site-badge-${key}`}>
             {label}
           </span>
         ));
@@ -233,9 +231,7 @@ class ComponentFlavor extends React.Component {
     return this.state.previewTabs.length > 1
       ? (
         <Tabs
-          className={classNames('site-example--tabs', {
-            'site-example--tabs-initial-view': this.state.initialView
-          })}
+          className="site-example--tabs"
           flavor="default"
           panel={previewPanel}
           selectedIndex={previewTabs.indexOf(previewTabActive)}>
@@ -268,8 +264,7 @@ class ComponentFlavor extends React.Component {
           data-form-factor={tab.key}
           data-controls={tab.key}
           id={`${flavor.uid}__preview-tab--${tab.key}`}
-          content={content}
-          initialView={this.state.initialView} />
+          content={content} />
       );
     });
   }

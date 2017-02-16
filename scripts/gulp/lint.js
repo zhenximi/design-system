@@ -18,9 +18,10 @@ import eslint from 'gulp-eslint';
 import scsslint from 'gulp-scss-lint';
 import browserSync from 'browser-sync';
 import htmlhint from 'gulp-htmlhint';
+import tokenlint from './plugins/lint-tokens';
+import yamlValidate from 'gulp-yaml-validate';
 import vnu from './vnu-lint';
 import minimist from 'minimist';
-
 
 gulp.task('lint:sass', () =>
   gulp.src([
@@ -79,7 +80,7 @@ gulp.task('lint:js:test', lintjs([
 
 // This task lints pre-built assets (not the JSX templates),
 // So you typically have to run `npm run build` before linting HTML files.
-gulp.task('lint:html', ['generate:examples:wrap'], () => {
+gulp.task('lint:html', ['generate:wrappedexamples'], () => {
   return gulp.src('.html/*.html')
     .pipe(htmlhint({
       // Rules documentation:
@@ -106,10 +107,40 @@ gulp.task('lint:html', ['generate:examples:wrap'], () => {
     .pipe(htmlhint.reporter());
 });
 
+gulp.task('lint:tokens:yaml', () =>
+  gulp.src([
+    './ui/components/**/tokens/*.yml',
+    './design-tokens/aliases/*.yml'
+  ])
+    .pipe(yamlValidate())
+);
+
+gulp.task('lint:tokens:components', () =>
+  gulp.src([
+    './ui/components/**/tokens/*.yml',
+    '!./ui/components/**/tokens/bg-*.yml', // icons
+    '!./ui/components/**/tokens/force-font-commons.yml' // fonts
+  ])
+    .pipe(tokenlint())
+    .pipe(tokenlint.report('verbose'))
+);
+
+gulp.task('lint:tokens:aliases', () =>
+  gulp.src([
+    './design-tokens/aliases/*.yml'
+  ])
+    .pipe(tokenlint({ prefix: false }))
+    .pipe(tokenlint.report('verbose'))
+);
+
+gulp.task('lint:tokens', ['lint:tokens:yaml', 'lint:tokens:components', 'lint:tokens:aliases']);
+
+gulp.task('lint', ['lint:sass', 'lint:spaces', 'lint:js', 'lint:html', 'lint:tokens']);
+
 const parseComponentArgument = argv =>
   minimist(argv.slice(2)).component || '*';
 
-gulp.task('lint:vnu', ['generate:examples:wrap'], () =>
+gulp.task('lint:vnu', ['generate:wrappedexamples'], () =>
   gulp.src(`.html/${parseComponentArgument(process.argv)}`)
   .pipe(vnu.lint())
   .pipe(vnu.report())

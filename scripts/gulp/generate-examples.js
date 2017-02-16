@@ -12,13 +12,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import fs from 'fs';
 import gulp from 'gulp';
 import gutil from 'gulp-util';
+import insert from 'gulp-insert';
 import path from 'path';
 import through from 'through2';
 import beautify from  'js-beautify';
 import { renderToStaticMarkup } from 'react-dom/server';
-
-import { resolve } from 'path';
-import { assign, flatMap, last } from 'lodash';
+import assign from 'lodash/assign';
+import flatMap from 'lodash/flatMap';
 import { generateUI } from './generate-ui';
 
 const prettyHTML = html => beautify.html(html, {
@@ -29,6 +29,9 @@ const prettyHTML = html => beautify.html(html, {
   'indent_inner_html': true
 });
 
+const addUID = (component, flavor, example) =>
+  assign({uid: `${component.id}_${flavor.id}_${example.id}` }, example);
+
 const toStates = (ex, k) =>
   [{ id: k, element: ex[k] }];
 
@@ -38,65 +41,46 @@ const getStates = file =>
       : file.states;
 
 const requireExample = flavor =>
-  require(resolve(__PATHS__.ui, flavor.examplePath));
+  require(path.resolve(__PATHS__.ui, flavor.examplePath));
 
-export const addExamples = comps =>
-  comps.map(c => assign(c, {
-    flavors: c.flavors
-        .filter(f => f.examplePath)
-        .map(f => assign(f, { examples: getStates(requireExample(f)) }))
-  })
+export const addExamples = components =>
+  components.map(comp =>
+    assign(comp, {
+      flavors:
+        comp.flavors
+        .filter(flavor => flavor.examplePath)
+        .map(flavor =>
+          assign(flavor, {
+            examples:
+              getStates(requireExample(flavor))
+              .map(state => addUID(comp, flavor, state))
+          }))
+    })
 );
-
-export const getComponents = schema =>
-  flatMap(generateUI(schema), 'components');
-
-const getName = (component, flavor, example) =>
-  `${component.id}_${flavor.id}_${example.id}`;
 
 const flattenExamples = comps =>
   flatMap(comps, comp =>
     flatMap(comp.flavors, flavor =>
-      flatMap(flavor.examples, ex =>
-        assign(ex, { uid: getName(comp, flavor, ex) }))));
+      flavor.examples));
 
-const toHtml = el =>
+export const getComponents = schema =>
+  flatMap(generateUI(schema), 'components');
+
+export const getExamples = () =>
+  addExamples(getComponents());
+
+export const toHtml = (el) =>
   prettyHTML(renderToStaticMarkup(el));
 
-
-const wrap = x =>
-  `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="utf-8" />
-      <title>SLDS Demo</title>
-    </head>
-      <body>
-        ${x}
-      </body>
-    </html>
-  `;
-
-const wrapTpl = () =>
-  through.obj((file, enc, next) =>
-    next(null, new gutil.File({
-      path: last(file.path.split('/')),
-      contents: new Buffer(wrap(String(file.contents)))
-    })));
-
-
-const examplePath = resolve(__PATHS__.generated, 'examples');
-
-gulp.task('generate:examples:wrap', ['generate:examples'], () =>
+gulp.task('generate:wrappedexamples', ['generate:examples'], () =>
   gulp
-    .src(resolve(examplePath,'*.html'))
-    .pipe(wrapTpl())
-    .pipe(gulp.dest(resolve(__PATHS__.html))));
+    .src(`${__PATHS__.generated}/examples/*.html`)
+    .pipe(insert.wrap('<!DOCTYPE html><html lang="en"><head><title>Example</title><link type="text/css" rel="stylesheet" href="../.www/assets/styles/slds.css" /></head><body>', '</body></html>'))
+    .pipe(gulp.dest(__PATHS__.html)));
 
 gulp.task('generate:examples', () => {
   const stream = through.obj();
-  const examples = flattenExamples(addExamples(getComponents()));
+  const examples = flattenExamples(getExamples());
   examples.forEach(ex =>
     stream.write(new gutil.File({
       path: `${ex.uid}.html`,
@@ -104,5 +88,5 @@ gulp.task('generate:examples', () => {
     })));
   stream.end();
   return stream
-    .pipe(gulp.dest(examplePath));
+    .pipe(gulp.dest(`${__PATHS__.generated}/examples`));
 });

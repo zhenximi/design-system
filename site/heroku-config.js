@@ -33,7 +33,12 @@ module.exports = {
     },
     {
       source: '/design/messaging',
-      destination: '/guidelines/messaging',
+      destination: '/guidelines/messaging-overview',
+      status: 301
+    },
+    {
+      source: '/guidelines/messaging',
+      destination: '/guidelines/messaging-overview',
       status: 301
     },
     {
@@ -59,6 +64,11 @@ module.exports = {
     {
       source: '/voice-and-tone',
       destination: '/guidelines/voice-and-tone',
+      status: 301
+    },
+    {
+      source: '/components',
+      destination: '/components-overview',
       status: 301
     },
     {

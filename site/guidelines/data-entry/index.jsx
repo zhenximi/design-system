@@ -202,14 +202,16 @@ export default (
         </div>
       </div>
 
-      <h2 className="site-text-heading--large">Complex Text Input</h2>
+      <div className="slds-m-top--xx-large">
+        <h2 className="site-text-heading--large">Complex Text Input</h2>
 
-      <p>
-        <strong>
-          Complex text inputs provide users with additional assistance in
-          specific types of data entry.
-        </strong>
-      </p>
+        <p>
+          <strong>
+            Complex text inputs provide users with additional assistance in
+            specific types of data entry.
+          </strong>
+        </p>
+      </div>
 
       <div className="slds-grid slds-wrap slds-grid--pull-padded-large">
         <div className="slds-col--padded-large slds-large-size--1-of-2">
@@ -358,7 +360,7 @@ export default (
                   🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢
                 </div>
 
-                <ul className="list--reset slds-lookup__list slds-m-left--none">
+                <ul className="site-list--reset slds-lookup__list slds-m-left--none">
                   {_.times(5, i =>
                     <li key={`item-${i}`}>
                       <a className="slds-lookup__item-action slds-media slds-media--center site-stencil__color-dark site-stencil__background-none-hover" href="javascript:void(0);" tabIndex="-1">
@@ -387,16 +389,18 @@ export default (
         </div>
       </div>
 
-      <h2 className="site-text-heading--large">Selection Input</h2>
+      <div className="slds-m-top--xx-large">
+        <h2 className="site-text-heading--large">Selection Input</h2>
 
-      <p>
-        <strong>
-          Selection inputs allow a user to choose between a limited number of
-          options for a given field.
-        </strong>
-      </p>
+        <p>
+          <strong>
+            Selection inputs allow a user to choose between a limited number of
+            options for a given field.
+          </strong>
+        </p>
 
-      <h3 className="site-text-heading--medium">Checkboxes</h3>
+        <h3 className="site-text-heading--medium">Checkboxes</h3>
+      </div>
 
       <div className="slds-grid slds-wrap slds-grid--pull-padded-large">
         <div className="slds-col--padded-large slds-large-size--1-of-2">
@@ -516,7 +520,7 @@ export default (
           <figure className="site-stencil slds-m-vertical--large">
             <div className="slds-form-element" aria-hidden="true">
               <label className="slds-checkbox--toggle slds-grid slds-grid--vertical-align-center">
-                <span className="slds-checkbox--faux site-stencil__background-light"></span>
+                <span className="slds-checkbox--faux site-stencil__border-light site-stencil__background-light"></span>
               </label>
             </div>
 
@@ -560,7 +564,7 @@ export default (
                           🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢
                         </span>
 
-                        <span className="slds-checkbox--faux site-stencil__background-light slds-col--bump-left"></span>
+                        <span className="slds-checkbox--faux site-stencil__border-light site-stencil__background-light slds-col--bump-left"></span>
                       </label>
                     </div>
                   )}
@@ -574,7 +578,7 @@ export default (
 
                         <input disabled name="checkbox" type="checkbox"  checked="checked" />
 
-                        <span className="slds-checkbox--faux site-stencil__background-dark slds-col--bump-left"></span>
+                        <span className="slds-checkbox--faux site-stencil__border-dark site-stencil__background-dark site-stencil__background-dark-after slds-col--bump-left"></span>
                       </label>
                     </div>
                   )}
@@ -605,7 +609,7 @@ export default (
                         🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢
                       </span>
 
-                      <span className="slds-checkbox--faux site-stencil__background-light slds-col--bump-left"></span>
+                      <span className="slds-checkbox--faux site-stencil__border-light site-stencil__background-light slds-col--bump-left"></span>
                     </label>
                   </div>
 
@@ -618,7 +622,7 @@ export default (
 
                         <input disabled name="checkbox" type="checkbox"  checked="checked" />
 
-                        <span className="slds-checkbox--faux site-stencil__background-dark slds-col--bump-left"></span>
+                        <span className="slds-checkbox--faux site-stencil__border-dark site-stencil__background-dark-after site-stencil__background-dark slds-col--bump-left"></span>
                       </label>
                     </div>
                   )}
@@ -663,7 +667,7 @@ export default (
                         🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢🁢
                       </span>
 
-                      <span className="slds-checkbox--faux site-stencil__background-light slds-col--bump-left"></span>
+                      <span className="slds-checkbox--faux site-stencil__border-light site-stencil__background-light slds-col--bump-left"></span>
                     </label>
                   </div>
 
@@ -709,24 +713,26 @@ export default (
         </div>
       </div>
 
-      <h4 className="site-text-heading--label">Labels</h4>
+      <div className="slds-m-top--xx-large">
+        <h4 className="site-text-heading--label">Labels</h4>
 
-      <p>A toggle is always accompanied by two external labels:</p>
+        <p>A toggle is always accompanied by two external labels:</p>
 
-      <ul>
-        <li>
-          <strong>Field label</strong>, which describes the item that the
-          user is modifying, e.g. Post sharing, Desktop notifications,
-          etc.
-        </li>
+        <ul>
+          <li>
+            <strong>Field label</strong>, which describes the item that the
+            user is modifying, e.g. Post sharing, Desktop notifications,
+            etc.
+          </li>
 
-        <li>
-          <strong>State label</strong>, which describes the current state
-          of the field. This label is binary and works in conjunction with
-          the on/off state, but it’s more contextual to the field. E.g.
-          Disabled/Enabled, Not Allowed/Allowed, etc.
-        </li>
-      </ul>
+          <li>
+            <strong>State label</strong>, which describes the current state
+            of the field. This label is binary and works in conjunction with
+            the on/off state, but it’s more contextual to the field. E.g.
+            Disabled/Enabled, Not Allowed/Allowed, etc.
+          </li>
+        </ul>
+      </div>
 
       <div className="slds-grid slds-wrap slds-grid--pull-padded-large slds-p-top--x-large">
         <div className="slds-col--padded-large slds-large-size--1-of-2">
@@ -749,7 +755,7 @@ export default (
               </button>
 
               <div className="slds-dropdown slds-dropdown--left site-stencil__border-light slds-is-static site-stencil__background-none-hover-parent">
-                <ul className="slds-list--reset slds-dropdown__list slds-dropdown--length-5 slds-m-left--none">
+                <ul className="slds-dropdown__list slds-dropdown--length-5 slds-m-left--none">
                   <li className="slds-dropdown__item slds-is-selected">
                     <a href="javascript:void(0);" tabIndex="-1" className="site-stencil__color-dark">
                       <span className="slds-truncate">
@@ -822,7 +828,7 @@ export default (
                 </span>
 
                 <div className="slds-picklist slds-picklist--multi">
-                  <ul className="slds-list--reset slds-picklist__options slds-picklist__options--multi site-stencil__border-light slds-m-left--none slds-size--1-of-1 slds-size--1-of-1"></ul>
+                  <ul className="slds-picklist__options slds-picklist__options--multi site-stencil__border-light slds-m-left--none slds-size--1-of-1 slds-size--1-of-1"></ul>
                 </div>
               </div>
             </div>
